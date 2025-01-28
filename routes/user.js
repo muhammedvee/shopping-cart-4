@@ -2,7 +2,8 @@ var express = require("express");
 var router = express.Router();
 var productHelper = require("../helpers/product-helpers");
 var userHelper = require("../helpers/user-helpers");
-const verifyLogin = (req, res, next) => req.session.loggedIn ? next() : res.redirect("/login");
+const verifyLogin = (req, res, next) =>
+  req.session.loggedIn ? next() : res.redirect("/login");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -32,14 +33,21 @@ router.get("/signup", function (req, res) {
 });
 
 router.post("/signup", function (req, res) {
-  userHelper.doSignup(req.body).then((result) => {
-    res.redirect("/signup");
-    console.log(result);
+  userHelper.doSignup(req.body).then((response) => {
+    if (response.status) {
+      req.session.loggedIn = true;
+      req.session.user = response.user;
+      res.redirect("/");
+    } else {
+      res.redirect("/signup");
+    }
   });
 });
 
 router.post("/login", (req, res) => {
   userHelper.doLogin(req.body).then((response) => {
+    console.log("login : " + response.user);
+
     if (response.status) {
       req.session.loggedIn = true;
       req.session.user = response.user;

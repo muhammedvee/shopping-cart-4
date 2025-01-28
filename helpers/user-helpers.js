@@ -5,8 +5,20 @@ module.exports = {
   doSignup: (userData) => {
     return new Promise(async (resolve, reject) => {
       userData.password = await bcrypt.hash(userData.password, 10);
-      db.get().collection(collections.USER_COLLECTION).insertOne(userData);
-      resolve(userData);
+      let loginStatus = false;
+      let response = {};
+
+      var user = await db
+        .get()
+        .collection(collections.USER_COLLECTION)
+        .insertOne(userData);
+
+      if (user) {
+        response.user = user.ops[0];
+        response.status = true;
+
+        resolve(response);
+      }
     });
   },
   doLogin: (userData) => {
@@ -43,20 +55,20 @@ module.exports = {
         // })
         bcrypt.compare(userData.password, user.password).then((status) => {
           if (status) {
-            console.log("login success");
-            response.user = user
-            response.status = true
-            resolve(response)
-          } else{
-            console.log('login failed');
-            resolve({status:false})
+            // console.log("login success");
+            response.user = user;
+            response.status = true;
+            resolve(response);
+          } else {
+            // console.log('login failed');
+            resolve({ status: false });
             // response.status2='Invalid password'
             // resolve(response)
           }
         });
       } else {
         console.log("user doesnot exist");
-        resolve({status:false})
+        resolve({ status: false });
         // response.status2='user does not exist'
         // resolve(response)
       }
