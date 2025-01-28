@@ -1,0 +1,31 @@
+<section>
+  <div class="">
+    {{#each products}}
+      <div
+        class="col-md-3 card p-3 m-3 align-items-center"
+        style="width: 18rem; float: left; background-color: #FFF8DC
+        
+;"
+      >
+        <span
+          class="badge bg-success rounded-pill p-2 mb-2 text-white"
+          style="font-size: 1rem;"
+        > Only at ₹{{this.price}}</span>
+
+        <img
+          src="/product-images/{{this._id}}.jpg"
+          class="card-img-top"
+          alt="product image"
+          style="height: 232px;
+    width: 190px;"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{this.name}}</h5>
+          <p class="card-text">{{this.description}}</p>
+
+          <a href="#" class="btn btn-primary" style="width: 100%;">Add to cart</a>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</section>

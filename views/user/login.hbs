@@ -1,0 +1,39 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header text-center">
+          <h3>Login</h3>
+        </div>
+        <div class="card-body">
+          <form action="/login" method="POST">
+        {{#if loginErr}}
+        {{!-- <p class="error">{{loginErrDetails}}</p> --}}
+        <p class="error">Invalid usename or password</p>
+        {{/if}}
+
+
+            <!-- Email -->
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required />
+            </div>
+            <!-- Password -->
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required />
+            </div>
+            <!-- Submit Button -->
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+          </form>
+          <!-- Link to Create Account -->
+          <div class="mt-3 text-center">
+            <p>Don't have an account? <a href="/signup">Create one here</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
